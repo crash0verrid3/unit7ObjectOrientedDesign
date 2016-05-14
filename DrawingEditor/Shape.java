@@ -15,7 +15,6 @@ public abstract class Shape
     private Point2D.Double center;
     private double radius;
     private Color color;
-    
     public Shape(Point2D.Double center, double radius, Color color)
     {
         this.center = center;

@@ -3,6 +3,7 @@ import javax.swing.JFrame;
 import java.util.ArrayList;
 import java.awt.geom.*;
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.JColorChooser;
 
 /**
@@ -29,6 +30,20 @@ public class DrawingPanel extends JPanel
         frame.setBackground(Color.white);
         frame.setPreferredSize(preferredFrameSize);
         this.add(frame);
+        this.addMouseListener(new MousePressListener(){
+            public void mousePressed(MouseEvent e){
+                System.out.println(++clicks);
+                if(s == null){
+                    for(Shape sh : shapeList){
+                        if(sh.isInside(new Point2D.Double(e.getX(), e.getY()))){
+                            s = sh;
+                        }
+                    }
+                } else{
+                    s.move(e.getX(), e.getY());
+                }
+            }
+        });
     }
     
     public void pickColor(){
@@ -110,5 +125,16 @@ public class DrawingPanel extends JPanel
                 activeShape.draw(g2, true);
             }
         }
+    }
+    
+        class MousePressListener implements MouseListener
+    {
+        Shape s = null;
+        int clicks = 0;
+        public void mousePressed(MouseEvent event){/* Override this*/}
+        public void mouseReleased(MouseEvent event) {}
+        public void mouseClicked(MouseEvent event) {}
+        public void mouseEntered(MouseEvent event) {}
+        public void mouseExited(MouseEvent event) {}
     }
 }
