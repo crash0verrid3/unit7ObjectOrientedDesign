@@ -25,7 +25,7 @@ public class DrawingEditor
         new Thread(){
             public void run(){
                 for(;;){
-                    frame.paint(frame.getContentPane().getGraphics());
+                    d.paintComponent(frame.getContentPane().getGraphics());
                     try{
                         this.sleep(333);
                     } catch(InterruptedException e){}
