@@ -22,16 +22,6 @@ public class DrawingEditor
         //Display the window.
         frame.pack();
         frame.setVisible(true);
-        new Thread(){
-            public void run(){
-                for(;;){
-                    d.paintComponent(frame.getContentPane().getGraphics());
-                    try{
-                        this.sleep(333);
-                    } catch(InterruptedException e){}
-                }
-            }
-        }.start();
     }
  
     public static void main(String[] args) {

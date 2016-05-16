@@ -48,5 +48,10 @@ public class Circle extends Shape
         g2.drawOval((int)(center.getX() - getRadius()), (int)(center.getY() - getRadius()), 2 * (int)radius, 2 * (int)radius);
         
     }
-
+    public void move(double x, double y)
+    {
+        super.move(x, y);
+        // put your code here
+        this.center = new Point2D.Double(this.center.getX() + x, this.center.getY() + y);
+    }
 }

@@ -33,17 +33,10 @@ public class Square extends Shape
     public boolean isInside(Point2D.Double point)
     {
         // put your code here
-        if (point.getX() > (this.getCenter()).getX() - this.getRadius() &&
-        point.getX() < (this.getCenter()).getX() + this.getRadius() &&
-        point.getY() > (this.getCenter()).getY() - this.getRadius() &&
-        point.getY() < (this.getCenter()).getY() + this.getRadius())
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return (point.getX() > this.getCenter().getX() - this.getRadius() &&
+        point.getX() < this.getCenter().getX() + this.getRadius() &&
+        point.getY() > this.getCenter().getY() - this.getRadius() &&
+        point.getY() < this.getCenter().getY() + this.getRadius());
     }
     
     /**
@@ -56,5 +49,11 @@ public class Square extends Shape
     {
         g2.drawRect((int)(center.getX() - getRadius()), (int)(center.getY() - getRadius()), 2 * (int)(getRadius()), 2 * (int)(getRadius()));
         
+    }
+    public void move(double x, double y)
+    {
+        super.move(x, y);
+        // put your code here
+        this.center = new Point2D.Double(this.center.getX() + x, this.center.getY() + y);
     }
 }

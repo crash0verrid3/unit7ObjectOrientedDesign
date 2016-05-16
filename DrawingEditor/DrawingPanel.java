@@ -19,6 +19,7 @@ public class DrawingPanel extends JPanel
     private Shape activeShape;
     private Color color;
     private JPanel frame;
+    private Color bgColor = new Color(255, 255, 255);
 
     /**
      * Default constructor for objects of class DrawingPanel
@@ -27,20 +28,24 @@ public class DrawingPanel extends JPanel
     {
         // initialise instance variables
         frame = new JPanel();
-        frame.setBackground(Color.white);
+        frame.setBackground(bgColor);
         frame.setPreferredSize(preferredFrameSize);
         this.add(frame);
+        
         this.addMouseListener(new MousePressListener(){
             public void mousePressed(MouseEvent e){
-                System.out.println(++clicks);
                 if(s == null){
                     for(Shape sh : shapeList){
                         if(sh.isInside(new Point2D.Double(e.getX(), e.getY()))){
                             s = sh;
+                            activeShape = s;
                         }
                     }
                 } else{
-                    s.move(e.getX(), e.getY());
+                    s.move(e.getX()-s.getCenter().getX(), e.getY()-s.getCenter().getY());
+                    s = null;
+                    activeShape = null;
+                    update();
                 }
             }
         });
@@ -68,10 +73,11 @@ public class DrawingPanel extends JPanel
     public void addCircle()
     {
         // put your code here
-        Circle circle = new Circle(new Point2D.Double(500,500), Math.random()*180, this.color);
+        Circle circle = new Circle(new Point2D.Double(250, 250), Math.random()*180, this.color);
         this.shapeList.add(circle);
         
         activeShape = circle;
+        update();
     }
 
         /**
@@ -88,13 +94,15 @@ public class DrawingPanel extends JPanel
     public void addSquare()
     {
         // put your code here
-        Square square = new Square(new Point2D.Double(500,500), Math.random()*180, this.color);
+        Square square = new Square(new Point2D.Double(250, 250), Math.random()*180, this.color);
         this.shapeList.add(square);
         
         activeShape = square;
+        update();
     }
     
     public void update(){
+        ((Graphics2D)this.frame.getGraphics()).clearRect(0, 0, this.frame.getWidth(), this.frame.getHeight());
         paintComponent(this.frame.getGraphics());
     }
     /**
@@ -107,20 +115,20 @@ public class DrawingPanel extends JPanel
     {
         // put your code here
         Graphics2D g2 = (Graphics2D)g;
-        int count = 0;
+        boolean count = false;
         for (int i = shapeList.size()-1; i >= 0; i--)
         {
-            if (activeShape.equals(shapeList.get(i)))
+            if (shapeList.get(i) == activeShape)
 
 
             {
-                count++;
+                count = true;
             }
             else
             {
                 shapeList.get(i).draw(g2, false);
             }
-            if (count > 0)
+            if (count)
             {
                 activeShape.draw(g2, true);
             }
