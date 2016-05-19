@@ -9,14 +9,14 @@ import java.awt.Graphics2D;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Square extends Shape
+public class BackgroundColor extends Shape
 {
     // instance variables - replace the example below with your own
     
     private Point2D.Double center;
     private double radius;
     
-    public Square(Point2D.Double center, double radius, Color color)
+    public BackgroundColor(Point2D.Double center, double radius, Color color)
     {
         super(center, radius, color);
         this.center = center;
@@ -30,11 +30,7 @@ public class Square extends Shape
      */
     public boolean isInside(Point2D.Double point)
     {
-        // put your code here
-        return (point.getX() > this.getCenter().getX() - this.getRadius() &&
-        point.getX() < this.getCenter().getX() + this.getRadius() &&
-        point.getY() > this.getCenter().getY() - this.getRadius() &&
-        point.getY() < this.getCenter().getY() + this.getRadius());
+        return false;
     }
     
     /**
@@ -46,11 +42,7 @@ public class Square extends Shape
     public void draw(Graphics2D g2, boolean filled)
     {
         g2.setColor(getColor());
-        if(filled){
             g2.fillRect((int)(center.getX() - getRadius()), (int)(center.getY() - getRadius()), 2 * (int)(getRadius()), 2 * (int)(getRadius()));
-        } else{
-            g2.drawRect((int)(center.getX() - getRadius()), (int)(center.getY() - getRadius()), 2 * (int)(getRadius()), 2 * (int)(getRadius()));
-        }
         
     }
     public void move(double x, double y)
@@ -60,8 +52,6 @@ public class Square extends Shape
         this.center = new Point2D.Double(this.center.getX() + x, this.center.getY() + y);
     }
     public boolean isOnBorder(Point2D.Double point, int tolerance){
-        boolean a = new Square(center, radius-tolerance, null).isInside(point);
-        boolean b = new Square(center, radius+tolerance, null).isInside(point);
-        return !a && b;
+        return false;
     }
 }

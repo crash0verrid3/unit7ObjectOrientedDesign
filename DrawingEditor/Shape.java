@@ -21,6 +21,12 @@ public abstract class Shape
         this.radius = radius;
         this.color = color;
     }
+    public Color getColor(){
+        return this.color;
+    }
+    public void setColor(Color color){
+        this.color = color;
+    }
 
     /**
      * An example of a method - replace this comment with your own
@@ -71,5 +77,8 @@ public abstract class Shape
     }
     public abstract boolean isInside(Point2D.Double point);
     public abstract void draw(Graphics2D g2, boolean filled);
-
+    public abstract boolean isOnBorder(Point2D.Double point, int tolerance);
+    public boolean isOnBorder(Point2D.Double point){
+        return isOnBorder(point, 1);
+    }
 }

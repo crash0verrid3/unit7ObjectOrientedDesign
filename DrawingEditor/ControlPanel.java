@@ -22,7 +22,7 @@ public class ControlPanel extends JPanel
     
     private JPanel panel;
     
-    private Color color;
+    private static Color color;
     
     private MouseListener listener1;
     private MouseListener listener2;

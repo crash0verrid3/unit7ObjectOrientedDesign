@@ -15,14 +15,12 @@ public class Circle extends Shape
     
     private Point2D.Double center;
     private double radius;
-    private Color color;
     
     public Circle(Point2D.Double center, double radius, Color color)
     {
         super(center, radius, color);
         this.center = center;
         this.radius = radius;
-        this.color = color;
     }
     
     /**
@@ -33,8 +31,7 @@ public class Circle extends Shape
      */
     public boolean isInside(Point2D.Double point)
     {
-        return Math.abs(center.getX() - point.getX()) + Math.abs(center.getY() + point.getY()) <= getRadius();
-        
+        return Math.pow(point.getX() - center.getX(), 2) + Math.pow(point.getY() - center.getY(), 2) < Math.pow(getRadius(), 2);
     }
     
     /**
@@ -45,7 +42,12 @@ public class Circle extends Shape
      */
     public void draw(Graphics2D g2, boolean filled)
     {
-        g2.drawOval((int)(center.getX() - getRadius()), (int)(center.getY() - getRadius()), 2 * (int)radius, 2 * (int)radius);
+        g2.setColor(getColor());
+        if(filled){
+            g2.fillOval((int)(center.getX() - getRadius()), (int)(center.getY() - getRadius()), 2 * (int)radius, 2 * (int)radius);
+        } else{
+            g2.drawOval((int)(center.getX() - getRadius()), (int)(center.getY() - getRadius()), 2 * (int)radius, 2 * (int)radius);
+        }
         
     }
     public void move(double x, double y)
@@ -53,5 +55,10 @@ public class Circle extends Shape
         super.move(x, y);
         // put your code here
         this.center = new Point2D.Double(this.center.getX() + x, this.center.getY() + y);
+    }
+    public boolean isOnBorder(Point2D.Double point, int tolerance){
+        boolean a = new Circle(center, radius-tolerance, null).isInside(point);
+        boolean b = new Circle(center, radius+tolerance, null).isInside(point);
+        return !a && b;
     }
 }
